@@ -1,4 +1,13 @@
-import { Controller } from '@nestjs/common';
+import { Controller, Post } from '@nestjs/common';
 
 @Controller('player')
-export class PlayerController {}
+export class PlayerController {
+
+    @Post()
+    async createPlayer() {
+        return {
+            name: 'breno'
+        }        
+    }
+
+}
