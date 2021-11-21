@@ -1,4 +1,4 @@
-import { Body, Controller, Get, Post } from '@nestjs/common';
+import { Body, Controller, Get, Param, Post } from '@nestjs/common';
 import { CreatePlayerDto } from './dto/create-player.dto';
 import { Player } from './interfaces/player.interface';
 import { PlayerService } from './player.service';
@@ -11,6 +11,13 @@ export class PlayerController {
     @Get()
     listPlayers(): Promise<Player[]> {
         return this.service.listPlayers();
+    }
+
+    @Get(':id')
+    listPlayer(
+        @Param('id') id: string
+    ): Promise<Player> {
+        return this.service.listPlayer(id);
     }
 
     @Post()
