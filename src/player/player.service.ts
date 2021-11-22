@@ -38,4 +38,21 @@ export class PlayerService {
 
         return player;
     }
+
+    async listPlayerByEmail(email: string): Promise<Player> {
+        const player  = this.players.find(player => player.email === email)
+
+        if(!player) {
+            throw new NotFoundException(`Player with email '${email}' not found`);
+        }
+
+        return player;
+    }
+
+    async deletePlayer(id: string): Promise<Player> {
+        const player = this.listPlayer(id);
+        this.players = this.players.filter(player => player._id != id);
+
+        return player;
+    }
 }
