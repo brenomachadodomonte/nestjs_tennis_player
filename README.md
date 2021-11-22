@@ -6,6 +6,12 @@
 
 An API to Ranking Tennis Players
 
+## Mongo Installation
+
+```bash
+$ docker run -p 27017:27017 -d --name mongodb mongo
+```
+
 ## Installation
 
 ```bash
