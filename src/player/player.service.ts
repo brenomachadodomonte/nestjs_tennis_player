@@ -2,16 +2,22 @@ import { Injectable, NotFoundException } from '@nestjs/common';
 import { CreatePlayerDto } from './dto/create-player.dto';
 import { Player } from './interfaces/player.interface';
 import { v4 as uuid } from 'uuid';
+import { InjectModel } from '@nestjs/mongoose';
+import { Model } from 'mongoose';
 
 @Injectable()
 export class PlayerService {
 
     private players: Player[] = [];
 
+    constructor(
+        @InjectModel('Jogador')
+        private readonly jogadorModel: Model<Player>
+    ){}
+
     async createPlayer(createPlayerDto: CreatePlayerDto): Promise<Player>{
         const { name, cellphone, email } = createPlayerDto;
-        const jogador: Player = {
-            _id: uuid(),
+        const player: Player = {
             name,
             email,
             cellphone,
