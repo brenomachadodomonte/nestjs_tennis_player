@@ -26,8 +26,8 @@ export class PlayerService {
         return player;
     }
 
-    async listPlayers(): Promise<Player[]> {
-        return this.players;
+    listPlayers(): Promise<Player[]> {
+        return this.playerModel.find().exec();
     }
 
     async listPlayer(id: string): Promise<Player> {
