@@ -1,4 +1,4 @@
-import { Injectable, NotFoundException } from '@nestjs/common';
+import { ConflictException, Injectable, NotFoundException } from '@nestjs/common';
 import { CreatePlayerDto } from './dto/create-player.dto';
 import { Player } from './interfaces/player.interface';
 import { v4 as uuid } from 'uuid';
@@ -8,27 +8,22 @@ import { Model } from 'mongoose';
 @Injectable()
 export class PlayerService {
 
-    private players: Player[] = [];
-
     constructor(
         @InjectModel('Jogador')
-        private readonly jogadorModel: Model<Player>
+        private readonly playerModel: Model<Player>
     ){}
 
     async createPlayer(createPlayerDto: CreatePlayerDto): Promise<Player>{
-        const { name, cellphone, email } = createPlayerDto;
-        const player: Player = {
-            name,
-            email,
-            cellphone,
-            ranking: '',
-            rankingPosition: 0,
-            photoUrl: ''
+        const { email } = createPlayerDto;
+        const found = await this.listPlayerByEmail(email);
+
+        if(found) {
+            throw new ConflictException(`Player with email ${email} already exists`);
         }
 
-        this.players.push(jogador);
+        const player = this.playerModel.create(createPlayerDto);
 
-        return jogador;
+        return player;
     }
 
     async listPlayers(): Promise<Player[]> {
@@ -46,7 +41,7 @@ export class PlayerService {
     }
 
     async listPlayerByEmail(email: string): Promise<Player> {
-        const player  = this.players.find(player => player.email === email)
+        const player = await this.playerModel.findOne({ email }).exec();
 
         if(!player) {
             throw new NotFoundException(`Player with email '${email}' not found`);
