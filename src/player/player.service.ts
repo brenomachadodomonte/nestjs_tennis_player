@@ -9,7 +9,7 @@ import { Model } from 'mongoose';
 export class PlayerService {
 
     constructor(
-        @InjectModel('Jogador')
+        @InjectModel('Player')
         private readonly playerModel: Model<Player>
     ){}
 
