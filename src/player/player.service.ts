@@ -51,9 +51,9 @@ export class PlayerService {
     }
 
     async deletePlayer(id: string): Promise<Player> {
-        const player = this.listPlayer(id);
-        this.players = this.players.filter(player => player._id != id);
-
+        const player = await this.listPlayer(id);
+        await this.playerModel.deleteOne({ _id: id }).exec();
+    
         return player;
     }
 }
