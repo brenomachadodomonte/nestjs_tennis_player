@@ -15,7 +15,7 @@ export class PlayerService {
 
     async createPlayer(createPlayerDto: CreatePlayerDto): Promise<Player>{
         const { email } = createPlayerDto;
-        const found = await this.listPlayerByEmail(email);
+        const found = await this.playerModel.findOne({ email }).exec();
 
         if(found) {
             throw new ConflictException(`Player with email ${email} already exists`);
@@ -31,7 +31,7 @@ export class PlayerService {
     }
 
     async listPlayer(id: string): Promise<Player> {
-        const player = this.playerModel.findById(id).exec();
+        const player = await this.playerModel.findById(id).exec();
 
         if(!player) {
             throw new NotFoundException(`Player with id '${id}' not found`);
