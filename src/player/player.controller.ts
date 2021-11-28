@@ -1,4 +1,4 @@
-import { Body, Controller, Delete, Get, Param, Post } from '@nestjs/common';
+import { Body, Controller, Delete, Get, Param, Patch, Post, Put } from '@nestjs/common';
 import { CreatePlayerDto } from './dto/create-player.dto';
 import { Player } from './interfaces/player.interface';
 import { ValidationPlayer } from './pipes/validation-player.pipe';
@@ -28,9 +28,18 @@ export class PlayerController {
         return this.service.createPlayer(createPlayerDto);
     }
 
-    @Delete(':email')
+    @Put(':id')
+    @Patch(':id')
+    updatePlayer(
+        @Param('id') id: string,
+        @Body() updateDto: CreatePlayerDto
+    ): Promise<Player>{
+        return null;
+    }
+
+    @Delete(':id')
     deletePlayer(
-        @Param('email', ValidationPlayer) id: string
+        @Param('id') id: string
     ): Promise<Player> {
         return this.service.deletePlayer(id);
     }
