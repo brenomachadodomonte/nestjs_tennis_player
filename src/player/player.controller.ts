@@ -34,7 +34,7 @@ export class PlayerController {
         @Param('id') id: string,
         @Body() updateDto: CreatePlayerDto
     ): Promise<Player>{
-        return null;
+        return this.service.updatePlayer(id, updateDto);
     }
 
     @Delete(':id')
