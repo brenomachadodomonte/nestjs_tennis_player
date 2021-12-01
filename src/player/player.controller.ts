@@ -1,5 +1,6 @@
 import { Body, Controller, Delete, Get, Param, Patch, Post, Put } from '@nestjs/common';
 import { CreatePlayerDto } from './dto/create-player.dto';
+import { UpdatePlayerDto } from './dto/update-player.dto';
 import { Player } from './interfaces/player.interface';
 import { ValidationPlayer } from './pipes/validation-player.pipe';
 import { PlayerService } from './player.service';
@@ -31,7 +32,7 @@ export class PlayerController {
     @Patch(':id')
     updatePlayer(
         @Param('id') id: string,
-        @Body() updateDto: CreatePlayerDto
+        @Body() updateDto: UpdatePlayerDto
     ): Promise<Player>{
         return this.service.updatePlayer(id, updateDto);
     }

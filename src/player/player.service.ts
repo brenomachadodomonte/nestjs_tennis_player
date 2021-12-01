@@ -4,6 +4,7 @@ import { Player } from './interfaces/player.interface';
 import { v4 as uuid } from 'uuid';
 import { InjectModel } from '@nestjs/mongoose';
 import { Model } from 'mongoose';
+import { UpdatePlayerDto } from './dto/update-player.dto';
 
 @Injectable()
 export class PlayerService {
@@ -26,7 +27,7 @@ export class PlayerService {
         return player;
     }
 
-    async updatePlayer(id: string, updateDto: CreatePlayerDto): Promise<Player> {
+    async updatePlayer(id: string, updateDto: UpdatePlayerDto): Promise<Player> {
         const found = await this.listPlayer(id);
         return this.playerModel.findOneAndUpdate({_id: id}, updateDto, {new: true}).exec();
     }
