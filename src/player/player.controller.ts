@@ -28,7 +28,6 @@ export class PlayerController {
         return this.service.createPlayer(createPlayerDto);
     }
 
-    @Put(':id')
     @Patch(':id')
     updatePlayer(
         @Param('id') id: string,

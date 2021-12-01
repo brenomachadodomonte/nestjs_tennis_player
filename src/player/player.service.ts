@@ -28,8 +28,7 @@ export class PlayerService {
 
     async updatePlayer(id: string, updateDto: CreatePlayerDto): Promise<Player> {
         const found = await this.listPlayer(id);
-
-        return this.playerModel.findOneAndUpdate({_id: id},{ set: updateDto }).exec();
+        return this.playerModel.findOneAndUpdate({_id: id}, updateDto, {new: true}).exec();
     }
 
     listPlayers(): Promise<Player[]> {
